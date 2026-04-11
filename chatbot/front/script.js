@@ -53,7 +53,7 @@ form.addEventListener("submit", async (event) => {
 
     try {
         // CALL YOUR BACKEND
-        const res = await fetch("http://localhost:3000/chat", {
+        const res = await fetch("https://chatbot-production-878d.up.railway.app/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

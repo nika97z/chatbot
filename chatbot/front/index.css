@@ -29,6 +29,10 @@ body {
   transition: opacity 220ms ease, transform 220ms ease;
 }
 
+.launcher-icon {
+  color: rgba(59, 131, 109, 1.00);
+}
+
 .main {
   display: none;
   height: 500px;

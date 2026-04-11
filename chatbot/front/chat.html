@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Chatbot</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./index.css">
@@ -17,7 +18,7 @@
             <form id="chat-form" action="">
                 <div class="text_conteiner">
                     <input type="text" class="text" placeholder="Ask anything">
-                    <button class="send" id="btn">
+                    <button class="send" id="btn" type="button" title="Send message" aria-label="Send message">
                         <svg class="send-btn" viewBox="0 0 16 16" fill="currentColor" width="26px" height="26px">
                         <path fill="rgb(97, 197, 93)" d="M1.40926391,5.29366938 L15.6697462,0.453934265 C16.3429879,0.239515621 16.9856276,0.882771554 16.7714144,1.55665872 L11.9363152,15.8308142 C11.722102,16.5047013 10.8040452,16.6272263 10.4062206,16.0146016 L7.34603122,11.3280226 L12.057229,5.36657191 C12.2102384,5.1827845 12.0266271,4.9989971 11.8430157,5.15215327 L5.87714034,9.91898584 L1.19505066,6.85586236 C0.613614686,6.42702507 0.705420366,5.53871926 1.40926391,5.29366938 Z" transform="rotate(-45 12.3 10.382)"></path>
                         </svg>
@@ -26,88 +27,9 @@
             </form>
         </div>
     </div>
-    <i class="fa-solid fa-comment-dots" style="color: rgba(59, 131, 109, 1.00);" ></i>
+    <i class="fa-solid fa-comment-dots launcher-icon"></i>
     <script src="https://kit.fontawesome.com/fa05b4751c.js" crossorigin="anonymous"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-        const content = document.querySelector(".content");
-        const form = document.getElementById("chat-form");
-        const input = document.querySelector('.text');
-        const icon = document.querySelector('.fa-solid');
-        const main = document.querySelector('.main');
-        const fold = document.querySelector('.fold');
-
-        fold.addEventListener("click", () => {
-            main.style.display = "none";
-            icon.classList.remove('launcher-hidden');
-        });
-
-        icon.addEventListener("click", () => {
-            icon.classList.add('launcher-hidden');
-            main.style.display = "block";
-            void main.offsetWidth;
-            main.classList.add('is-opening');
-            setTimeout(() => input.focus(), 300);
-        });
-
-    const scrollToBottom = () => {
-        requestAnimationFrame(() => {
-            content.scrollTop = content.scrollHeight;
-        });
-    };
-
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const text = input.value.trim();
-        if (!text) return;
-
-        // USER MESSAGE
-        const userMsg = document.createElement("div");
-        userMsg.className = "user";
-        const rawHTML = marked.parse(text);
-
-        // Sanitize for security
-        const cleanHTML = DOMPurify.sanitize(rawHTML);
-        userMsg.innerHTML = cleanHTML;
-        content.appendChild(userMsg);
-
-        input.value = "";
-        scrollToBottom();
-
-        // BOT PLACEHOLDER
-        const botMsg = document.createElement("div");
-        botMsg.className = "gpt";
-        botMsg.textContent = "Typing...";
-        content.appendChild(botMsg);
-        scrollToBottom();
-
-        try {
-            // CALL YOUR BACKEND
-            const res = await fetch("http://localhost:3000/chat", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ message: text })
-            });
-
-            const data = await res.json();
-
-            // REPLACE "Typing..." WITH REAL RESPONSE
-            const rawHTML = marked.parse(data.reply);
-            const cleanHTML = DOMPurify.sanitize(rawHTML);
-            botMsg.innerHTML = cleanHTML;
-
-        } catch (err) {
-            console.error(err);
-            botMsg.textContent = "Server connection error";
-        }
-
-        scrollToBottom();
-        });
-    });
-    </script>
+    <script src="./script.js"></script>
 </body>
 
 </html>

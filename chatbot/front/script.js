@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const content = document.querySelector(".content");
-    const form = document.getElementById("chat-form");
-    const input = document.querySelector('.text');
-    const icon = document.querySelector('.fa-solid');
-    const main = document.querySelector('.main');
-    const fold = document.querySelector('.fold');
+    const widget = document.querySelector('.chatbot-widget');
+    const content = widget.querySelector(".content");
+    const form = widget.querySelector("#chat-form");
+    const input = widget.querySelector('.text');
+    const icon = widget.querySelector('.fa-solid');
+    const main = widget.querySelector('.main');
+    const fold = widget.querySelector('.fold');
 
     fold.addEventListener("click", () => {
         main.style.display = "none";

@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, 'front')));
 
 // ===== OpenAI client =====
 const client = new OpenAI({
-  apiKey: "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"
+  apiKey: API-KEY
 });
 
 const SYSTEM_PROMPT = `

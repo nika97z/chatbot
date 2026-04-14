@@ -33,7 +33,7 @@ app.use(
     secret: "f83Ksd92jF!92jfK#29skdLslP0x_2Klm",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // true only if using HTTPS
+    cookie: { secure: process.env.NODE_ENV === "production" }
   })
 );
 const MAX_MESSAGES = 20;
@@ -88,6 +88,7 @@ app.post("/chat", async (req, res) => {
 });
 
 // ===== Start server =====
-app.listen(3000, () => {
-  console.log("✅ Server running on http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
 });

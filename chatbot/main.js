@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, 'front')));
 
 // ===== OpenAI client =====
 const client = new OpenAI({
-  apiKey: process.env.API_KEY
+  apiKey: process.env.OPENAI_API_KEY
 });
 
 const SYSTEM_PROMPT = `

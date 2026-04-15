@@ -1,11 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const widget = document.querySelector('.chatbot-widget');
-    const content = widget.querySelector(".content");
-    const form = widget.querySelector("#chat-form");
-    const input = widget.querySelector('.text');
-    const icon = widget.querySelector('.fa-solid');
-    const main = widget.querySelector('.main');
-    const fold = widget.querySelector('.fold');
+    const content = document.querySelector(".content");
+    const form = document.getElementById("chat-form");
+    const input = document.querySelector('.text');
+    const icon = document.querySelector('.fa-solid');
+    const main = document.querySelector('.main');
+    const fold = document.querySelector('.fold');
 
     fold.addEventListener("click", () => {
         main.style.display = "none";
@@ -54,7 +53,7 @@ form.addEventListener("submit", async (event) => {
 
     try {
         // CALL YOUR BACKEND
-        const res = await fetch("https://chatbot-production-878d.up.railway.app/chat", {
+        const res = await fetch("http://localhost:3000/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

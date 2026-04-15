@@ -87,6 +87,9 @@ app.post("/chat", async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "front", "index.html"));
+});
 // ===== Start server =====
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

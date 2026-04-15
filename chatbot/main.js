@@ -9,6 +9,23 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+app.use(
+  session({
+    secret: "f83Ksd92jF!92jfK#29skdLslP0x_2Klm",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: process.env.NODE_ENV === "production" }
+  })
+);
+app.post("/chat", async (req, res) => {
+  try {
+    const reply = await chatbotResponse(req);
+    res.json({ reply });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ reply: err.message }); // change this line
+  }
+});
 app.use(cors());
 app.use(express.json());
 
@@ -28,14 +45,7 @@ Always format answers using proper Markdown with bullet points instead of inline
 `;
 
 // ===== Memory =====
-app.use(
-  session({
-    secret: "f83Ksd92jF!92jfK#29skdLslP0x_2Klm",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: process.env.NODE_ENV === "production" }
-  })
-);
+
 const MAX_MESSAGES = 20;
 
 async function chatbotResponse(req) {

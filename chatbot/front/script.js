@@ -53,7 +53,7 @@ form.addEventListener("submit", async (event) => {
 
     try {
         // CALL YOUR BACKEND
-        const res = await fetch("chatbot.svdpixel.com", {
+        const res = await fetch("https://chatbot.svdpixel.com/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

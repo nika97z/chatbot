@@ -34,7 +34,7 @@
   border-radius: 5%;
   overflow: hidden;
   position: fixed;
-  left: 70%;
+  left: 50%;
   top: 25%;
   opacity: 0;
   transform: translateY(28px) scale(0.86);

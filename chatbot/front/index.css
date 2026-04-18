@@ -7,8 +7,8 @@
   font-size: 80px;
   display: block;
   position: fixed;
-  left: 67%;
-  top: 77%;
+  left: 63%;
+  top: 57%;
   cursor: pointer;
   transform-origin: center;
   animation: launcherFloat 2.8s ease-in-out infinite;

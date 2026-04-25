@@ -13,7 +13,7 @@
   left: auto;  /* remove left */
   right: 20px; /* add right */
   top: auto;   /* remove top */
-  bottom: 20px; /* add bottom */
+  bottom: 60px; /* add bottom */
   cursor: pointer;
   transform-origin: center;
   animation: launcherFloat 2.8s ease-in-out infinite;

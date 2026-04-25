@@ -3,6 +3,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+.main, .fa-solid {
+  pointer-events: all;
+}
 .fa-solid {
   font-size: 80px;
   display: block;

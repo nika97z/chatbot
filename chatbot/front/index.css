@@ -3,17 +3,12 @@
   padding: 0;
   box-sizing: border-box;
 }
-.main, .fa-solid {
-  pointer-events: all;
-}
 .fa-solid {
   font-size: 80px;
   display: block;
   position: fixed;
-  left: auto;  /* remove left */
-  right: 20px; /* add right */
-  top: auto;   /* remove top */
-  bottom: 60px; /* add bottom */
+  left: 87%;
+  top: 77%;
   cursor: pointer;
   transform-origin: center;
   animation: launcherFloat 2.8s ease-in-out infinite;
@@ -39,10 +34,8 @@
   border-radius: 5%;
   overflow: hidden;
   position: fixed;
-  left: auto;   /* remove left */
-  right: 20px;  /* add right */
-  top: auto;    /* remove top */
-  bottom: 110px
+  left: 70%;
+  top: 25%;
   opacity: 0;
   transform: translateY(28px) scale(0.86);
   transform-origin: bottom right;
@@ -104,6 +97,94 @@
   overflow-wrap: anywhere;
   word-break: break-word;
   font-size: 17px;
+}
+
+/* Tablet Portrait */
+@media screen and (max-width: 768px) {
+  .fa-solid {
+    left: 85%;
+    top: 80%;
+    font-size: 70px;
+  }
+  
+  .main {
+    width: 350px;
+    height: 450px;
+    left: 60%;
+    top: 20%;
+  }
+}
+
+/* Mobile Landscape */
+@media screen and (max-width: 640px) {
+  .fa-solid {
+    left: 80%;
+    top: 82%;
+    font-size: 60px;
+  }
+  
+  .main {
+    width: 300px;
+    height: 400px;
+    left: 50%;
+    top: 15%;
+  }
+  
+  .main .header .fold {
+    left: 80%;
+  }
+}
+
+/* Mobile Portrait */
+@media screen and (max-width: 480px) {
+  .fa-solid {
+    left: 75%;
+    top: 85%;
+    font-size: 55px;
+  }
+  
+  .main {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 0;
+    transform: translateY(0) scale(1);
+  }
+  
+  .main .header {
+    height: 12%;
+  }
+  
+  .main .header .fold {
+    left: 85%;
+    top: 15px;
+  }
+  
+  .main .content {
+    height: 73%;
+    padding: 8px;
+  }
+  
+  .main .content .user,
+  .main .content .gpt {
+    font-size: 15px;
+    padding: 8px;
+  }
+}
+
+/* Small Mobile */
+@media screen and (max-width: 360px) {
+  .fa-solid {
+    left: 70%;
+    font-size: 50px;
+  }
+  
+  .main .content .user,
+  .main .content .gpt {
+    font-size: 14px;
+    padding: 6px;
+  }
 }
 .main .content .gpt ol, .main .content .gpt ul {
   padding-left: 20px;

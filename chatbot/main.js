@@ -10,16 +10,25 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// ===== Middleware first =====
+// ===== Middleware =====
 app.use(session({
-  secret: "f83Ksd92jF!92jfK#29skdLslP0x_2Klm",
+  secret: process.env.SESSION_SECRET || "f83Ksd92jF!92jfK#29skdLslP0x_2Klm",
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: process.env.NODE_ENV === "production" }
+  cookie: {
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 1000 * 60 * 60 * 24 // 24 hours
+  }
 }));
-app.use(cors());
+
+// Restrict CORS to your own domain in production
+const allowedOrigins = process.env.ALLOWED_ORIGIN
+  ? [process.env.ALLOWED_ORIGIN]
+  : "*";
+
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'front')));
+app.use(express.static(path.join(__dirname, "front")));
 
 // ===== OpenAI client =====
 const client = new OpenAI({
@@ -28,7 +37,6 @@ const client = new OpenAI({
 
 const SYSTEM_PROMPT = `
 You are a sharp, confident assistant for [svd pixel] — a web agency that builds high-performance websites, ranks them on Google, and deploys AI automation systems that save businesses 15–30 hours per week.
-
 Your job is two things: answer questions about our services, and qualify leads.
 
 SERVICES WE OFFER:
@@ -66,26 +74,62 @@ WHAT YOU DON'T DO:
 
 const MAX_MESSAGES = 20;
 
+// ===== Extract contact info from user message =====
+function extractContactInfo(text, session) {
+  if (!session.lead) session.lead = {};
+
+  const emailMatch = text.match(/[\w.+-]+@[\w-]+\.[a-z]{2,}/i);
+  if (emailMatch) session.lead.email = emailMatch[0];
+
+  const phoneMatch = text.match(/(\+?\d[\d\s\-().]{7,}\d)/);
+  if (phoneMatch) session.lead.phone = phoneMatch[1].trim();
+
+  // Try to capture name if not already saved (simple heuristic: "I'm X" or "My name is X")
+  if (!session.lead.name) {
+    const nameMatch = text.match(/(?:i'?m|my name is)\s+([A-Z][a-z]+(?:\s[A-Z][a-z]+)?)/i);
+    if (nameMatch) session.lead.name = nameMatch[1];
+  }
+}
+
+// ===== Core chat logic =====
 async function chatbotResponse(req) {
   const userInput = req.body.message;
+
+  // Guard: reject empty messages
+  if (!userInput || typeof userInput !== "string" || userInput.trim() === "") {
+    throw new Error("Message cannot be empty.");
+  }
+
   if (!req.session.chatHistory) {
     req.session.chatHistory = [
       { role: "system", content: SYSTEM_PROMPT }
     ];
   }
+
   const chatHistory = req.session.chatHistory;
+
+  // Extract and save contact info before pushing to history
+  extractContactInfo(userInput, req.session);
+
   chatHistory.push({ role: "user", content: userInput });
+
+  // Keep system prompt + last (MAX_MESSAGES - 1) messages
   if (chatHistory.length > MAX_MESSAGES) {
-    chatHistory.splice(1, chatHistory.length - MAX_MESSAGES);
+    const systemPrompt = chatHistory[0];
+    const trimmed = chatHistory.slice(-(MAX_MESSAGES - 1));
+    req.session.chatHistory = [systemPrompt, ...trimmed];
   }
+
   const response = await client.chat.completions.create({
     model: "gpt-4o-mini",
-    messages: chatHistory,
+    messages: req.session.chatHistory,
     max_tokens: 400,
     temperature: 0.7
   });
+
   const reply = response.choices[0].message.content;
-  chatHistory.push({ role: "assistant", content: reply });
+  req.session.chatHistory.push({ role: "assistant", content: reply });
+
   return reply;
 }
 
@@ -99,13 +143,25 @@ app.post("/chat", async (req, res) => {
     const reply = await chatbotResponse(req);
     res.json({ reply });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ reply: err.message });
+    console.error("Chat error:", err.message);
+    const status = err.message === "Message cannot be empty." ? 400 : 500;
+    res.status(status).json({ reply: err.message });
   }
+});
+
+// ===== View collected leads (protect this in production!) =====
+// To secure this: add a middleware that checks a secret header or password
+// Example: if (req.headers['x-admin-key'] !== process.env.ADMIN_KEY) return res.status(401).json({ error: 'Unauthorized' });
+app.get("/leads", (req, res) => {
+  const adminKey = req.headers["x-admin-key"];
+  if (!process.env.ADMIN_KEY || adminKey !== process.env.ADMIN_KEY) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+  res.json({ lead: req.session.lead || null });
 });
 
 // ===== Start server =====
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

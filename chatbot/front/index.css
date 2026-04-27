@@ -144,18 +144,23 @@
   }
   
   .main {
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
     padding-left: 20px;
     padding-right: 20px;
-    left: 0;
-    top: 0;
-    border-radius: 0;
-    transform: translateY(0) scale(1);
+    left: 0 !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    border-radius: 0 !important;
+    transform: translateY(0) scale(1) !important;
+    position: fixed !important;
   }
   
   .main .header {
-    height: 12%;
+    height: 12% !important;
   }
   
   .main .header .fold {
@@ -164,7 +169,7 @@
   }
   
   .main .content {
-    height: 73%;
+    height: 73% !important;
     padding: 8px;
   }
   
@@ -182,10 +187,29 @@
     font-size: 50px;
   }
   
+  .main {
+    width: 100% !important;
+    height: 100% !important;
+    left: 0 !important;
+    top: 0 !important;
+  }
+  
   .main .content .user,
   .main .content .gpt {
     font-size: 14px;
     padding: 6px;
+  }
+}
+
+/* iPhone 12 / 13 / 14 (390px) */
+@media screen and (max-width: 400px) {
+  .main {
+    width: 100% !important;
+    height: 100% !important;
+    left: 0 !important;
+    top: 0 !important;
+    border-radius: 0 !important;
+    transform: translateY(0) scale(1) !important;
   }
 }
 .main .content .gpt ol, .main .content .gpt ul {

@@ -85,7 +85,9 @@ app.post("/chat", async (req, res) => {
 });
 
 // ===== Start server =====
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`✅ Server running on port ${PORT}`);
+app.use(express.static(path.join(__dirname, 'front')));
+
+// Serve chat.html at the root
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'front', 'chat.html'));
 });

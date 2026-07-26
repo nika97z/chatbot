@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, 'front')));
 
 // ===== OpenAI client =====
 const client = new OpenAI({
-  apiKey: process.env.API_KEY
+  apiKey: process.env.OPENAI_API_KEY
 });
 
 const SYSTEM_PROMPT = `
@@ -91,3 +91,4 @@ app.post("/chat", async (req, res) => {
 app.listen(3000, () => {
   console.log("✅ Server running on http://localhost:3000");
 });
+

@@ -51,29 +51,32 @@ form.addEventListener("submit", async (event) => {
     content.appendChild(botMsg);
     scrollToBottom();
 
-    document.addEventListener("DOMContentLoaded", () => {
+   try {
     const API_BASE = window.location.hostname === "localhost"
         ? "http://localhost:3000"
         : "https://chatbot.svdpixel.com";
 
-    // ...rest of your existing code (content, form, input, icon, etc.)
+    // CALL YOUR BACKEND
+    const res = await fetch(`${API_BASE}/chat`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: text })
+    });
 
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        // ...user message handling...
+    const data = await res.json();
 
-        try {
-            const res = await fetch(`${API_BASE}/chat`, {
-                method: "POST",
-                credentials: "include",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: text })
-            });
-            // ...rest unchanged
-        } catch (err) {
-            console.error(err);
-            botMsg.textContent = "Server connection error";
-        }
+    // REPLACE "Typing..." WITH REAL RESPONSE
+    const rawHTML = marked.parse(data.reply);
+    const cleanHTML = DOMPurify.sanitize(rawHTML);
+    botMsg.innerHTML = cleanHTML;
+
+} catch (err) {
+    console.error(err);
+    botMsg.textContent = "Server connection error";
+}
     });
 });
 

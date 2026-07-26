@@ -30,7 +30,7 @@ Always format answers using proper Markdown with bullet points instead of inline
 // ===== Memory =====
 app.use(
   session({
-    secret: "f83Ksd92jF!92jfK#29skdLslP0x_2Klm",
+    secret: "f83Ksd92jF!92jfK#29skdLslP0x_2Kklm",
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false } // true only if using HTTPS
@@ -82,11 +82,6 @@ app.post("/chat", async (req, res) => {
     console.error(err);
     res.status(500).json({ reply: "Server error" });
   }
-});
-
-// Serve chat.html at the root
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'front', 'chat.html'));
 });
 
 // ===== Start server =====

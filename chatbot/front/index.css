@@ -12,6 +12,7 @@ body {
 }
 
 .fa-solid {
+  z-index: 999;
   font-size: 80px;
   display: block;
   position: fixed;
@@ -20,6 +21,7 @@ body {
   cursor: pointer;
   transform-origin: center;
   animation: launcherFloat 2.8s ease-in-out infinite;
+  color: rgb(23, 43, 155);
 }
 
 .fa-solid.launcher-hidden {
@@ -27,10 +29,6 @@ body {
   pointer-events: none;
   transform: scale(0.6);
   transition: opacity 220ms ease, transform 220ms ease;
-}
-
-.launcher-icon {
-  color: rgba(59, 131, 109, 1.00);
 }
 
 .main {
@@ -51,9 +49,12 @@ body {
 .main.is-opening {
   animation: openChat 420ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+.main .launcher-icon {
+  color: rgb(81, 19, 97);
+}
 .main .header {
   height: 15%;
-  background-color: rgb(92, 126, 78);
+  background-color: rgb(0, 37, 118);
   width: 100%;
   position: relative;
 }
@@ -62,7 +63,7 @@ body {
   height: 10px;
   border: solid 1px black;
   border-radius: 10%;
-  background-color: rgb(172, 203, 162);
+  background-color: rgb(189, 27, 135);
   position: absolute;
   left: 85%;
   top: 10px;
@@ -71,7 +72,7 @@ body {
 .main .content {
   height: 70%;
   width: 100%;
-  background-color: rgb(70, 87, 89);
+  background-color: rgb(177, 151, 224);
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -120,7 +121,7 @@ body {
 }
 .main .footer {
   height: 15%;
-  background-color: rgb(0, 118, 55);
+  background-color: rgb(0, 37, 118);
 }
 .main .footer form {
   display: flex;
@@ -130,7 +131,7 @@ body {
   width: 100%;
 }
 .main .footer form .text_conteiner {
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   height: 60%;
   width: 80%;
   border-radius: 10px;

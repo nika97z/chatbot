@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fold.addEventListener("click", () => {
         main.style.display = "none";
         icon.classList.remove('launcher-hidden');
+        window.parent.postMessage('chat-closed', '*'); 
     });
 
     icon.addEventListener("click", () => {
@@ -17,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         void main.offsetWidth;
         main.classList.add('is-opening');
         setTimeout(() => input.focus(), 300);
+        window.parent.postMessage('chat-open', '*');
     });
 
 const scrollToBottom = () => {
@@ -53,7 +55,7 @@ form.addEventListener("submit", async (event) => {
 
     try {
         // CALL YOUR BACKEND
-        const res = await fetch("http://localhost:3000/chat", {
+        const res = await fetch("https://chatbot.svdpixel.com/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

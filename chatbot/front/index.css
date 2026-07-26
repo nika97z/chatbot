@@ -3,14 +3,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
 .fa-solid {
   z-index: 999;
   font-size: 80px;
@@ -22,6 +14,7 @@ body {
   transform-origin: center;
   animation: launcherFloat 2.8s ease-in-out infinite;
   color: rgb(23, 43, 155);
+  z-index: 999
 }
 
 .fa-solid.launcher-hidden {
@@ -105,6 +98,120 @@ body {
   overflow-wrap: anywhere;
   word-break: break-word;
   font-size: 17px;
+}
+
+/* Tablet Portrait */
+@media screen and (max-width: 768px) {
+  .fa-solid {
+    left: 85%;
+    top: 80%;
+    font-size: 70px;
+  }
+  
+  .main {
+    width: 350px;
+    height: 450px;
+    left: 60%;
+    top: 20%;
+  }
+}
+
+/* Mobile Landscape */
+@media screen and (max-width: 640px) {
+  .fa-solid {
+    left: 80%;
+    top: 82%;
+    font-size: 60px;
+  }
+  
+  .main {
+    width: 300px;
+    height: 400px;
+    left: 50%;
+    top: 15%;
+  }
+  
+  .main .header .fold {
+    left: 80%;
+  }
+}
+
+/* Mobile Portrait */
+@media screen and (max-width: 480px) {
+  .fa-solid {
+    left: 75%;
+    top: 85%;
+    font-size: 55px;
+  }
+  
+  .main {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    padding-left: 20px;
+    padding-right: 20px;
+    left: 0 !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    border-radius: 0 !important;
+    transform: translateY(0) scale(1) !important;
+    position: fixed !important;
+  }
+  
+  .main .header {
+    height: 12% !important;
+  }
+  
+  .main .header .fold {
+    left: 85%;
+    top: 15px;
+  }
+  
+  .main .content {
+    height: 73% !important;
+    padding: 8px;
+  }
+  
+  .main .content .user,
+  .main .content .gpt {
+    font-size: 15px;
+    padding: 8px;
+  }
+}
+
+/* Small Mobile */
+@media screen and (max-width: 360px) {
+  .fa-solid {
+    left: 70%;
+    font-size: 50px;
+  }
+  
+  .main {
+    width: 100% !important;
+    height: 100% !important;
+    left: 0 !important;
+    top: 0 !important;
+  }
+  
+  .main .content .user,
+  .main .content .gpt {
+    font-size: 14px;
+    padding: 6px;
+  }
+}
+
+/* iPhone 12 / 13 / 14 (390px) */
+@media screen and (max-width: 400px) {
+  .main {
+    width: 100% !important;
+    height: 100% !important;
+    left: 0 !important;
+    top: 0 !important;
+    border-radius: 0 !important;
+    transform: translateY(0) scale(1) !important;
+  }
 }
 .main .content .gpt ol, .main .content .gpt ul {
   padding-left: 20px;

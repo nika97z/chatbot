@@ -52,31 +52,29 @@ form.addEventListener("submit", async (event) => {
     scrollToBottom();
 
    try {
-    const API_BASE = window.location.hostname === "localhost"
-        ? "http://localhost:3000"
-        : "https://chatbot.svdpixel.com";
+        // CALL YOUR BACKEND
+        const res = await fetch("https://chatbot.svdpixel.com/chat", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message: text })
+        });
 
-    // CALL YOUR BACKEND
-    const res = await fetch(`${API_BASE}/chat`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ message: text })
-    });
+        const data = await res.json();
 
-    const data = await res.json();
+        // REPLACE "Typing..." WITH REAL RESPONSE
+        const rawHTML = marked.parse(data.reply);
+        const cleanHTML = DOMPurify.sanitize(rawHTML);
+        botMsg.innerHTML = cleanHTML;
 
-    // REPLACE "Typing..." WITH REAL RESPONSE
-    const rawHTML = marked.parse(data.reply);
-    const cleanHTML = DOMPurify.sanitize(rawHTML);
-    botMsg.innerHTML = cleanHTML;
+    } catch (err) {
+        console.error(err);
+        botMsg.textContent = "Server connection error";
+    }
 
-} catch (err) {
-    console.error(err);
-    botMsg.textContent = "Server connection error";
-}
+    scrollToBottom();
     });
 });
 

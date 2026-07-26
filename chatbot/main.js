@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, 'front')));
 
 // ===== OpenAI client =====
 const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY 
+  apiKey: process.env.OPENAI_API_KEY
 });
 
 const SYSTEM_PROMPT = `
@@ -36,13 +36,12 @@ app.use(
     cookie: { secure: false } // true only if using HTTPS
   })
 );
+
 const MAX_MESSAGES = 20;
 
 async function chatbotResponse(req) {
-
   const userInput = req.body.message;
 
-  // Create session memory if not exists
   if (!req.session.chatHistory) {
     req.session.chatHistory = [
       { role: "system", content: SYSTEM_PROMPT }
@@ -50,7 +49,6 @@ async function chatbotResponse(req) {
   }
 
   const chatHistory = req.session.chatHistory;
-
   chatHistory.push({
     role: "user",
     content: userInput
@@ -68,7 +66,6 @@ async function chatbotResponse(req) {
   });
 
   const reply = response.choices[0].message.content;
-
   chatHistory.push({
     role: "assistant",
     content: reply
@@ -91,5 +88,4 @@ app.post("/chat", async (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ Server running on port ${PORT}`);
-});
 });

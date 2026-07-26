@@ -12,6 +12,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// ===== Session middleware BEFORE static files =====
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "f83Ksd92jF!92jfK#29skdLslP0x_2Klm",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: process.env.NODE_ENV === "production" }
+  })
+);
+
 // Serve static files from front folder
 app.use(express.static(path.join(__dirname, 'front')));
 
@@ -27,15 +37,6 @@ Keep answers friendly, clear, concise, persuasive.
 Always format answers using proper Markdown with bullet points instead of inline numbered paragraphs.
 `;
 
-// ===== Memory =====
-app.use(
-  session({
-    secret: "f83Ksd92jF!92jfK#29skdLslP0x_2Klm",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false } // true only if using HTTPS
-  })
-);
 const MAX_MESSAGES = 20;
 
 async function chatbotResponse(req) {
@@ -77,6 +78,11 @@ async function chatbotResponse(req) {
   return reply;
 }
 
+// Root route - serve chat.html
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, 'front', 'chat.html'));
+});
+
 app.post("/chat", async (req, res) => {
   try {
     const reply = await chatbotResponse(req);
@@ -91,3 +97,4 @@ app.post("/chat", async (req, res) => {
 app.listen(3000, () => {
   console.log("✅ Server running on http://localhost:3000");
 });
+

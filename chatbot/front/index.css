@@ -20,6 +20,7 @@ body {
   cursor: pointer;
   transform-origin: center;
   animation: launcherFloat 2.8s ease-in-out infinite;
+  color: rgb(62, 62, 174);
 }
 
 .fa-solid.launcher-hidden {
@@ -30,7 +31,7 @@ body {
 }
 
 .launcher-icon {
-  color: rgba(59, 131, 109, 1.00);
+  color: rgb(62, 62, 174);
 }
 
 .main {

@@ -20,7 +20,6 @@ body {
   cursor: pointer;
   transform-origin: center;
   animation: launcherFloat 2.8s ease-in-out infinite;
-  color: rgb(62, 62, 174);
 }
 
 .fa-solid.launcher-hidden {
@@ -54,7 +53,7 @@ body {
 }
 .main .header {
   height: 15%;
-  background-color: rgb(92, 126, 78);
+  background-color: rgb(0, 50, 124);
   width: 100%;
   position: relative;
 }
@@ -63,7 +62,7 @@ body {
   height: 10px;
   border: solid 1px black;
   border-radius: 10%;
-  background-color: rgb(172, 203, 162);
+  background-color: rgb(158, 5, 69);
   position: absolute;
   left: 85%;
   top: 10px;
@@ -72,7 +71,7 @@ body {
 .main .content {
   height: 70%;
   width: 100%;
-  background-color: rgb(70, 87, 89);
+  background-color: rgb(51, 127, 136);
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -88,7 +87,7 @@ body {
   border: solid 1px black;
   padding: 10px;
   border-radius: 15px;
-  background-color: rgb(172, 203, 162);
+  background-color: rgb(121, 206, 212);
   white-space: normal;
   overflow-wrap: anywhere;
   word-break: break-word;
@@ -99,7 +98,7 @@ body {
   border: solid 1px black;
   padding: 10px;
   border-radius: 15px;
-  background-color: sandybrown;
+  background-color: rgb(201, 146, 247);
   align-self: flex-start;
   white-space: normal;
   overflow-wrap: anywhere;
@@ -121,7 +120,7 @@ body {
 }
 .main .footer {
   height: 15%;
-  background-color: rgb(0, 118, 55);
+  background-color: rgb(0, 50, 124);
 }
 .main .footer form {
   display: flex;

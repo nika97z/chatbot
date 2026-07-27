@@ -82,6 +82,7 @@ app.post("/chat", async (req, res) => {
     console.error(err);
     res.status(500).json({ reply: "Server error" });
   }
+  
 });
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "front", "chat.html"));

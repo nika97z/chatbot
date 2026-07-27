@@ -41,8 +41,8 @@ body {
   border-radius: 5%;
   overflow: hidden;
   position: fixed;
-  right: 10px;
-  bottom: 0;
+  right: 40px;
+  bottom: 20px;
   opacity: 0;
   transform: translateY(28px) scale(0.86);
   transform-origin: bottom right;

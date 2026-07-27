@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fold.addEventListener("click", () => {
         main.style.display = "none";
         icon.classList.remove('launcher-hidden');
+        window.parent.postMessage('chat-closed', '*');
     });
     icon.addEventListener("click", () => {
         icon.classList.add('launcher-hidden');
@@ -15,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         void main.offsetWidth;
         main.classList.add('is-opening');
         setTimeout(() => input.focus(), 300);
+        window.parent.postMessage('chat-open', '*');
     });
     const scrollToBottom = () => {
         requestAnimationFrame(() => {

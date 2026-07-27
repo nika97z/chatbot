@@ -159,6 +159,29 @@ body {
   background-color: none;
 }
 
+@media (max-width: 480px) {
+  .fa-solid {
+    font-size: 60px;
+    right: 8px;
+  }
+
+  .main {
+    width: calc(100vw - 16px);
+    height: calc(100vh - 16px);
+    max-height: 600px;
+    right: 8px;
+    bottom: 8px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-height: 520px) {
+  .main {
+    height: calc(100vh - 16px);
+    max-height: none;
+  }
+}
+
 @keyframes openChat {
   0% {
     opacity: 0;

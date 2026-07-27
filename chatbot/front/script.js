@@ -50,7 +50,9 @@ form.addEventListener("submit", async (event) => {
     botMsg.textContent = "Typing...";
     content.appendChild(botMsg);
     scrollToBottom();
-
+    app.get("/", (req, res) => {
+      res.sendFile(path.join(__dirname, "front", "chat.html"));
+    });
    try {
         // CALL YOUR BACKEND
         const res = await fetch("https://chatbot.svdpixel.com/chat", {

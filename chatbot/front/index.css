@@ -15,8 +15,8 @@ body {
   font-size: 80px;
   display: block;
   position: fixed;
-  left: 87%;
-  top: 77%;
+  right: 10px;
+  bottom: 0;
   cursor: pointer;
   transform-origin: center;
   animation: launcherFloat 2.8s ease-in-out infinite;
@@ -41,8 +41,8 @@ body {
   border-radius: 5%;
   overflow: hidden;
   position: fixed;
-  left: 70%;
-  top: 25%;
+  right: 10px;
+  bottom: 0;
   opacity: 0;
   transform: translateY(28px) scale(0.86);
   transform-origin: bottom right;

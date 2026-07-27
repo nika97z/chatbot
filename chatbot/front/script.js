@@ -5,12 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const icon = document.querySelector('.fa-solid');
     const main = document.querySelector('.main');
     const fold = document.querySelector('.fold');
-
     fold.addEventListener("click", () => {
         main.style.display = "none";
         icon.classList.remove('launcher-hidden');
     });
-
     icon.addEventListener("click", () => {
         icon.classList.add('launcher-hidden');
         main.style.display = "block";
@@ -18,65 +16,43 @@ document.addEventListener("DOMContentLoaded", () => {
         main.classList.add('is-opening');
         setTimeout(() => input.focus(), 300);
     });
-
-const scrollToBottom = () => {
-    requestAnimationFrame(() => {
-        content.scrollTop = content.scrollHeight;
-    });
-};
-
-form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const text = input.value.trim();
-    if (!text) return;
-
-    // USER MESSAGE
-    const userMsg = document.createElement("div");
-    userMsg.className = "user";
-    const rawHTML = marked.parse(text);
-
-    // Sanitize for security
-    const cleanHTML = DOMPurify.sanitize(rawHTML);
-    userMsg.innerHTML = cleanHTML;
-    content.appendChild(userMsg);
-
-    input.value = "";
-    scrollToBottom();
-
-    // BOT PLACEHOLDER
-    const botMsg = document.createElement("div");
-    botMsg.className = "gpt";
-    botMsg.textContent = "Typing...";
-    content.appendChild(botMsg);
-    scrollToBottom();
-    app.get("/", (req, res) => {
-      res.sendFile(path.join(__dirname, "front", "chat.html"));
-    });
-   try {
-        // CALL YOUR BACKEND
-        const res = await fetch("https://chatbot.svdpixel.com/chat", {
-            method: "POST",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ message: text })
+    const scrollToBottom = () => {
+        requestAnimationFrame(() => {
+            content.scrollTop = content.scrollHeight;
         });
-
-        const data = await res.json();
-
-        // REPLACE "Typing..." WITH REAL RESPONSE
-        const rawHTML = marked.parse(data.reply);
+    };
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const text = input.value.trim();
+        if (!text) return;
+        const userMsg = document.createElement("div");
+        userMsg.className = "user";
+        const rawHTML = marked.parse(text);
         const cleanHTML = DOMPurify.sanitize(rawHTML);
-        botMsg.innerHTML = cleanHTML;
-
-    } catch (err) {
-        console.error(err);
-        botMsg.textContent = "Server connection error";
-    }
-
-    scrollToBottom();
+        userMsg.innerHTML = cleanHTML;
+        content.appendChild(userMsg);
+        input.value = "";
+        scrollToBottom();
+        const botMsg = document.createElement("div");
+        botMsg.className = "gpt";
+        botMsg.textContent = "Typing...";
+        content.appendChild(botMsg);
+        scrollToBottom();
+        try {
+            const res = await fetch("https://chatbot.svdpixel.com/chat", {
+                method: "POST",
+                credentials: "include",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: text })
+            });
+            const data = await res.json();
+            const rawHTML2 = marked.parse(data.reply);
+            const cleanHTML2 = DOMPurify.sanitize(rawHTML2);
+            botMsg.innerHTML = cleanHTML2;
+        } catch (err) {
+            console.error(err);
+            botMsg.textContent = "Server connection error";
+        }
+        scrollToBottom();
     });
 });
-
